@@ -15,6 +15,15 @@ python3 main.py
 
 The first run downloads the books from Project Gutenberg into `data/`. After that it works offline.
 
+### Web interface
+
+```
+python3 server.py
+```
+
+This opens http://localhost:8000 in your browser and shows the same four features as the console menu, with
+one tab each. It still uses only standard Python. To use a different port, run `python3 server.py 8080`.
+
 ## How it works
 
 **1. Learning.** The model reads a book and counts which word comes after which word.
@@ -70,6 +79,7 @@ Mark Twain's book is the shortest, so his model has the least training data.
 | 3 | `generator.py` | Generating new text from the chain and making it readable |
 | 4 | `detector.py` | Guessing the author and measuring accuracy |
 | All | `main.py` | The menu that connects everything |
+| All | `server.py`, `web/` | The web interface (a small local server and an HTML/CSS/JS page) |
 
 ## Possible improvements
 

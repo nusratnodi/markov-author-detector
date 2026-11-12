@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Markov Author Detector</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>Markov Author Detector</h1>
+      <p class="lede">A Markov chain learns how four authors write. It can write new text in their style
+        and guess who wrote a passage it has never seen.</p>
+    </header>
+
+    <nav class="tabs" role="tablist">
+      <button role="tab" id="tab-generate" aria-controls="panel-generate" aria-selected="true">Write</button>
+      <button role="tab" id="tab-detect" aria-controls="panel-detect" aria-selected="false">Guess the author</button>
+      <button role="tab" id="tab-random" aria-controls="panel-random" aria-selected="false">Random passage</button>
+      <button role="tab" id="tab-accuracy" aria-controls="panel-accuracy" aria-selected="false">Accuracy</button>
+    </nav>
+
+    <main>
+      <!-- 1. Generate -->
+      <section role="tabpanel" id="panel-generate" aria-labelledby="tab-generate">
+        <p class="hint">Picks each next word at random, weighted by how often it followed the last two words in the author's book.</p>
+        <form id="generate-form" class="controls">
+          <fieldset>
+            <legend>Author</legend>
+            <div class="chips" id="author-chips"></div>
+          </fieldset>
+          <div class="row">
+            <label>Sentences
+              <select id="sentences">
+                <option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option>
+              </select>
+            </label>
+            <button type="submit" class="primary">Write text</button>
+          </div>
+        </form>
+        <div id="generate-result" class="result" hidden>
+          <blockquote id="generated-text"></blockquote>
+          <p class="meta" id="generated-meta"></p>
+        </div>
+      </section>
+
+      <!-- 2. Detect pasted text -->
+      <section role="tabpanel" id="panel-detect" aria-labelledby="tab-detect" hidden>
+        <p class="hint">Each author's model scores how likely it is to have produced these words in this order. The highest score wins.</p>
+        <form id="detect-form" class="controls">
+          <textarea id="detect-text" rows="7" placeholder="Paste a passage here…"></textarea>
+          <div class="row">
+            <span class="meta" id="word-count">0 words</span>
+            <button type="submit" class="primary">Guess author</button>
+          </div>
+        </form>
+        <div id="detect-result" class="result" hidden></div>
+      </section>
+
+      <!-- 3. Random unseen passage -->
+      <section role="tabpanel" id="panel-random" aria-labelledby="tab-random" hidden>
+        <p class="hint">Takes a random 50-word passage from the last 20% of a book. The models never saw this part during training.</p>
+        <div class="row">
+          <button type="button" class="primary" id="random-btn">Pick a passage</button>
+          <span class="meta" id="tally"></span>
+        </div>
+        <div id="random-result" class="result" hidden>
+          <blockquote id="random-passage"></blockquote>
+          <div id="random-ranking"></div>
+        </div>
+      </section>
+
+      <!-- 4. Accuracy -->
+      <section role="tabpanel" id="panel-accuracy" aria-labelledby="tab-accuracy" hidden>
+        <p class="hint">Guesses the author of every unseen 50-word passage and counts how many are right. Random guessing would get 25%.</p>
+        <div class="row">
+          <button type="button" class="primary" id="accuracy-btn">Run the test</button>
+          <span class="meta" id="accuracy-status"></span>
+        </div>
+        <div id="accuracy-result" class="result" hidden>
+          <div class="table-wrap"><table id="accuracy-table"></table></div>
+          <p class="meta">Order = how many previous words the model looks at. Higher orders write better text but
+            detect worse, because most longer word sequences never appear in the training book.</p>
+        </div>
+      </section>
+
+      <p class="error" id="error" role="alert" hidden></p>
+    </main>
+
+    <footer>
+      <span>Trained on:</span>
+      <ul id="books"></ul>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
