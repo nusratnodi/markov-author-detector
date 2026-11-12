@@ -19,6 +19,7 @@ The first run downloads the books from Project Gutenberg into `data/`. After tha
 
 ```
 python3 server.py
+python server.py
 ```
 
 This opens http://localhost:8000 in your browser and shows the same four features as the console menu, with
