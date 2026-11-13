@@ -14,23 +14,8 @@
   --serif: Georgia, "Times New Roman", serif;
   --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --radius: 10px;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #161614;
-    --surface: #1f1f1c;
-    --text: #ecebe6;
-    --muted: #9c998f;
-    --border: #34332e;
-    --accent: #7fb0e0;
-    --accent-text: #10202f;
-    --accent-soft: #1e2d3b;
-    --good: #6cc48f;
-    --good-soft: #1b3125;
-    --bad: #ec8076;
-    --bad-soft: #3a1f1c;
-  }
+  /* always light, even when the computer is in dark mode */
+  color-scheme: light;
 }
 
 * { box-sizing: border-box; }
